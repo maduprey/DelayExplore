@@ -21,8 +21,8 @@ ui <- fluidPage(
       ),
       br(),
       
-      textInput(inputId = "formula", 
-                label = "Formula: $f(t)$", 
+      textInput(inputId = "fun", 
+                label = "Function: $f(t)$", 
                 value = "cos(t) + cos(pi*t)", 
                 placeholder = "cos(t) + cos(pi*t)"),
       
@@ -49,7 +49,7 @@ server <- function(input, output) {
   output$point <- renderPlotly({
     
     # Create the delay embedding
-    d.em <- embedSeries(evalIn(input$formula), tlag = input$delay, dim = 3)
+    d.em <- embedSeries(evalIn(input$fun), tlag = input$delay, dim = 3)
     d.em <- as.matrix(d.em)
     d.em <- as.data.frame(d.em)
     names(d.em) <- c("t", "t.tau", "t.2tau")
@@ -70,7 +70,7 @@ server <- function(input, output) {
   
   output$line <- renderPlotly({
     
-    f <- evalIn(input$formula)
+    f <- evalIn(input$fun)
     
     p <- plot_ly(x = t, y = f, 
                  type = 'scatter', mode = 'lines', 
