@@ -14,3 +14,6 @@ Further context can be found in:
 * Shiny
 * Plotly
 * fractal
+
+## Test example
+<https://maduprey.shinyapps.io/delayExplore/>
