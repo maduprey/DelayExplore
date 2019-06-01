@@ -31,7 +31,11 @@ ui <- fluidPage(
                   min = 1,
                   max = 200, 
                   value = 14,
-                  step = 1)
+                  step = 1),
+      
+      hr(),
+      
+      plotlyOutput(outputId = "line")
     ),
     
     mainPanel(
@@ -62,6 +66,21 @@ server <- function(input, output) {
                      zaxis = list(title = paste0("f(t + 2*", input$delay, ")")))
       )
     
+  })
+  
+  output$line <- renderPlotly({
+    
+    f <- evalIn(input$formula)
+    
+    p <- plot_ly(x = t, y = f, 
+                 type = 'scatter', mode = 'lines', 
+                 height = 100) %>% 
+      layout(
+        xaxis = list(title = "t"),
+        yaxis = list(title = "f(t)"),
+        plot_bgcolor = 'transparent',
+        paper_bgcolor = 'transparent'
+      )
   })
   
 }
